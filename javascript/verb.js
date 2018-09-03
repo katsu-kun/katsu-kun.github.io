@@ -44,7 +44,7 @@ class Verb{
 	}
 
 	getTara(polarity){
-		return this->getShort(0, polarity) + "ら";
+		return this.getShort(0, polarity) + "ら";
 	}
 }
 
