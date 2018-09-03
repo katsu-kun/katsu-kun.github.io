@@ -82,7 +82,7 @@ class Ichidan extends Verb {
 	}
 
 	getStem(){
-		var stem = this.kanji.substring(0, kanji.length - 1);
+		var stem = this.kanji.substring(0, this.kanji.length - 1);
 		return stem;
 	}
 }
