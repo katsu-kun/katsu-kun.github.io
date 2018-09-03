@@ -81,8 +81,42 @@ class Ichidan extends Verb {
 		return this.toCausative().toPassive();
 	}
 
+	getShort(tense, polarity){
+		if(tense && polarity){
+			return this.kanji;
+		}
+
+		else if(tense && polarity){
+			return this.getStem() + "ない";
+		}
+
+		else if(!tense && polarity){
+			return this.getStem() + "た";
+		}
+
+		else if(!tense && !polarity){
+			return this.getStem() + "なかった";
+		}
+	}
+
 	getStem(){
 		var stem = this.kanji.substring(0, this.kanji.length - 1);
 		return stem;
+	}
+
+	getTe(polarity){
+		if(polarity){
+			return this.getStem() + "て";
+		} 
+
+		return this.getStem() + "なくて";
+	}
+
+	getBa(polarity){
+		if(polarity){
+			return this.getStem() + "れば";
+		} 
+
+		return this.getStem() + "なければ";
 	}
 }
