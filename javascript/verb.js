@@ -6,7 +6,7 @@ class Verb{
 	}
 
 	getMasu(tense, polarity){
-		var masu = this.getStem;
+		var masu = this.getStem();
 
 		if(tense && polarity){
 			masu += "ます";
