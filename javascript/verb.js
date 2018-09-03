@@ -1,6 +1,6 @@
 class Verb{
 	constructor(type, kanji, kana, meaning){
-		this.type  = type;
+		this.type  = type; //i, g, s, or k
 		this.kanji = kanji;
 		this.kana  = kana;
 	}
@@ -46,6 +46,10 @@ class Verb{
 	getTara(polarity){
 		return this.getShort(0, polarity) + "ら";
 	}
+
+	toCausativePassive() {
+		return this.toCausative().toPassive();
+	}
 }
 
 class Ichidan extends Verb {
@@ -60,7 +64,7 @@ class Ichidan extends Verb {
 		newKanji += "られる";
 		newKana  += "られる";
 
-		return new Ichidan(1, newKanji, newKana, this.meaning);
+		return new Ichidan(i, newKanji, newKana, this.meaning);
 	}
 
 	toPassive() {
@@ -74,11 +78,7 @@ class Ichidan extends Verb {
 		newKanji += "させる";
 		newKana  += "させる";
 
-		return new Ichidan(1, newKanji, newKana, this.meaning);
-	}
-
-	toCausativePassive() {
-		return this.toCausative().toPassive();
+		return new Ichidan(i, newKanji, newKana, this.meaning);
 	}
 
 	getShort(tense, polarity){
@@ -120,3 +120,164 @@ class Ichidan extends Verb {
 		return this.getStem() + "なければ";
 	}
 }
+
+var aChanges = {};
+aChanges["う"] = "わ";
+aChanges["く"] = "か";
+aChanges["ぐ"] = "が";
+aChanges["さ"] = "さ";
+aChanges["つ"] = "た";
+aChanges["ぶ"] = "ば";
+aChanges["む"] = "ま";
+aChanges["る"] = "ら";
+
+var iChanges = {};
+aChanges["う"] = "い";
+iChanges["く"] = "き";
+iChanges["ぐ"] = "ぎ";
+iChanges["す"] = "し";
+iChanges["つ"] = "ち";
+iChanges["ぶ"] = "び";
+iChanges["む"] = "み";
+iChanges["る"] = "り";
+
+var eChanges = {};
+eChanges["う"] = "え";
+eChanges["く"] = "け";
+eChanges["ぐ"] = "げ";
+eChanges["す"] = "せ";
+eChanges["つ"] = "て";
+eChanges["ぶ"] = "べ";
+eChanges["む"] = "め";
+eChanges["る"] = "れ";
+
+var teChanges = {};
+eChanges["う"] = "って";
+eChanges["く"] = "いて";
+eChanges["ぐ"] = "いで";
+eChanges["す"] = "して";
+eChanges["つ"] = "って";
+eChanges["ぶ"] = "んで";
+eChanges["む"] = "んで";
+eChanges["る"] = "って";
+
+var taChanges = {};
+eChanges["う"] = "った";
+eChanges["く"] = "いた";
+eChanges["ぐ"] = "いだ";
+eChanges["す"] = "した";
+eChanges["つ"] = "った";
+eChanges["ぶ"] = "んだ";
+eChanges["む"] = "んだ";
+eChanges["る"] = "った";
+
+class Godan extends Verb{
+	constructor(type, kanji, kana, meaning){
+		super(type, kanji, kana, meaning);
+	}
+
+	toPotential() {
+		var lastChar = this.kanji.slice(-1);
+		var ending = eChanges[lastChar] + "る";
+
+		var newKanji = this.kanji.substring(0, kanji.length - 1);
+		var newKana  = this.kana.substring(0,  kana.length -  1);
+
+		newKanji += ending;
+		newKana  += ending;
+
+		return new Ichidan(i, newKanji, newKana, this.meaning);
+	}
+
+	toPassive() {
+		var lastChar = this.kanji.slice(-1);
+		var ending = aChanges[lastChar] + "れる";
+
+		var newKanji = this.kanji.substring(0, kanji.length - 1);
+		var newKana  = this.kana.substring(0,  kana.length -  1);
+
+		newKanji += ending;
+		newKana  += ending;
+
+		return new Ichidan(i, newKanji, newKana, this.meaning);
+	}
+
+	toCausative() {
+		var lastChar = this.kanji.slice(-1);
+		var ending = aChanges[lastChar] + "せる";
+
+		var newKanji = this.kanji.substring(0, kanji.length - 1);
+		var newKana  = this.kana.substring(0,  kana.length -  1);
+
+		newKanji += ending;
+		newKana  += ending;
+
+		return new Ichidan(i, newKanji, newKana, this.meaning);
+	}
+
+	getShort(tense, polarity){
+		var lastChar = this.kanji.slice(-1);
+		var base = this.kanji.substring(0, this.kanji.length - 1);
+
+		if(tense && polarity){
+			return this.kanji;
+		}
+
+		else if(tense && polarity){
+			return base + aChanges[lastChar] + "ない";
+		}
+
+		else if(!tense && polarity){
+			// Exception for　verbs ending in いく
+			if(this.kanji.string(-2) === "いく"){
+				return base + "った";
+			}
+
+			return base + taChanges[lastChar];
+		}
+
+		else if(!tense && !polarity){
+			return base + aChanges[lastChar] + "なかった";
+		}
+	}
+
+	getStem(){
+		var lastChar = this.kanji.slice(-1);
+		var base = this.kanji.substring(0, this.kanji.length - 1);
+
+		return base + iChanges[lastChar];
+	}
+
+	getTe(polarity){
+		var lastChar = this.kanji.slice(-1);
+		var base = this.kanji.substring(0, this.kanji.length - 1);
+		
+		if(polarity){
+			// Account for verbs ending in いく
+			if(this.kanji.string(-2) === "いく"){
+				return base + "って";
+			}
+
+			var ending = teChanges[lastChar];
+			return base + ending;
+		}
+
+		else{
+			ending = aChanges[lastChar] + "なくて";
+			return base + ending;
+		}
+	}
+
+	getBa(polarity){
+		var lastChar = this.kanji.slice(-1);
+		var base = this.kanji.substring(0, this.kanji.length - 1);
+
+		if(polarity){
+			return base + eChanges[lastchar] + "ば";
+		} 
+
+		return base + aChanges[lastChar] + "なければ";
+	}
+}
+
+
