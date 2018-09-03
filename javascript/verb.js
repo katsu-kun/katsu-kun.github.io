@@ -6,7 +6,7 @@ class Verb{
 	}
 
 	getMasu(tense, polarity){
-		masu = this.getStem;
+		var masu = this.getStem;
 
 		if(tense && polarity){
 			masu += "ます";
@@ -25,7 +25,7 @@ class Verb{
 	}
 
 	getTai(tense, polarity, stem){
-		tai = this.getStem;
+		var tai = this.getStem;
 
 		if(tense && polarity){
 			tai += "たい";
@@ -54,8 +54,8 @@ class Ichidan extends Verb {
 	}
 
 	toPotential() {
-		newKanji = this.kanji.substring(0, kanji.length - 1);
-		newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, kanji.length - 1);
+		var newKana  = this.kana.substring(0,  kana.length -  1);
 
 		newKanji += "られる";
 		newKana  += "られる";
@@ -68,8 +68,8 @@ class Ichidan extends Verb {
 	}
 
 	toCausative() {
-		newKanji = this.kanji.substring(0, kanji.length - 1);
-		newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, kanji.length - 1);
+		var newKana  = this.kana.substring(0,  kana.length -  1);
 
 		newKanji += "させる";
 		newKana  += "させる";
@@ -82,7 +82,7 @@ class Ichidan extends Verb {
 	}
 
 	getStem(){
-		stem = this.kanji.substring(0, kanji.length - 1);
+		var stem = this.kanji.substring(0, kanji.length - 1);
 		return stem;
 	}
 }
