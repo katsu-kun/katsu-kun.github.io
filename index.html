@@ -3,24 +3,28 @@
 
   <head>
     <title>活くん (Commit 9 Test)</title>
-    <script src='./javascript/verb.js'></script>
+    <script src='./javascript/jquery-3.3.1.js'></script>
   </head>
 
   <body>
     <h1 id="test-text">活くん：活用のためのゲーム</h1>
+    <form><input type="text" name='Answer'></form>
 
-    <div id = "test-cases"></div>
-    <h2 id="ichi">一段</h2>
-    <h2 id="u">五段：う</h2>
-    <h2 id="iku">五段：行く</h2>
-    <h2 id="ku">五段：く</h2>
-    <h2 id="gu">五段：ぐ</h2>
-    <h2 id="su">五段：す</h2>
-    <h2 id="tsu">五段：つ</h2>
-    <h2 id="bu">五段：ぶ</h2>
-    <h2 id="mu">五段：む</h2>
-    <h2 id="ru">五段：る</h2>
+    <div id='conjugation-tests' visibility: hidden>
+      <h2 id="ichi">一段</h2>
+      <h2 id="u">五段：う</h2>
+      <h2 id="iku">五段：行く</h2>
+      <h2 id="ku">五段：く</h2>
+      <h2 id="gu">五段：ぐ</h2>
+      <h2 id="su">五段：す</h2>
+      <h2 id="tsu">五段：つ</h2>
+      <h2 id="bu">五段：ぶ</h2>
+      <h2 id="mu">五段：む</h2>
+      <h2 id="ru">五段：る</h2>
+    </div>
 
+    <script src='./javascript/verb.js'></script>
+    <script src='./javascript/conjugationTests.js'></script>
     <script src='./javascript/main.js'></script>
   </body>
 

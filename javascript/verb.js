@@ -25,7 +25,7 @@ class Verb{
 	}
 
 	getTai(tense, polarity, stem){
-		var tai = this.getStem;
+		var tai = this.getStem();
 
 		if(tense && polarity){
 			tai += "たい";
@@ -58,13 +58,13 @@ class Ichidan extends Verb {
 	}
 
 	toPotential() {
-		var newKanji = this.kanji.substring(0, kanji.length - 1);
-		var newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, this.kanji.length - 1);
+		var newKana  = this.kana.substring(0,  this.kana.length -  1);
 
 		newKanji += "られる";
 		newKana  += "られる";
 
-		return new Ichidan(i, newKanji, newKana, this.meaning);
+		return new Ichidan('i', newKanji, newKana, this.meaning);
 	}
 
 	toPassive() {
@@ -72,13 +72,13 @@ class Ichidan extends Verb {
 	}
 
 	toCausative() {
-		var newKanji = this.kanji.substring(0, kanji.length - 1);
-		var newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, this.kanji.length - 1);
+		var newKana  = this.kana.substring(0,  this.kana.length -  1);
 
 		newKanji += "させる";
 		newKana  += "させる";
 
-		return new Ichidan(i, newKanji, newKana, this.meaning);
+		return new Ichidan('i', newKanji, newKana, this.meaning);
 	}
 
 	getShort(tense, polarity){
@@ -86,7 +86,7 @@ class Ichidan extends Verb {
 			return this.kanji;
 		}
 
-		else if(tense && polarity){
+		else if(tense && !polarity){
 			return this.getStem() + "ない";
 		}
 
@@ -125,14 +125,14 @@ var aChanges = {};
 aChanges["う"] = "わ";
 aChanges["く"] = "か";
 aChanges["ぐ"] = "が";
-aChanges["さ"] = "さ";
+aChanges["す"] = "さ";
 aChanges["つ"] = "た";
 aChanges["ぶ"] = "ば";
 aChanges["む"] = "ま";
 aChanges["る"] = "ら";
 
 var iChanges = {};
-aChanges["う"] = "い";
+iChanges["う"] = "い";
 iChanges["く"] = "き";
 iChanges["ぐ"] = "ぎ";
 iChanges["す"] = "し";
@@ -152,24 +152,24 @@ eChanges["む"] = "め";
 eChanges["る"] = "れ";
 
 var teChanges = {};
-eChanges["う"] = "って";
-eChanges["く"] = "いて";
-eChanges["ぐ"] = "いで";
-eChanges["す"] = "して";
-eChanges["つ"] = "って";
-eChanges["ぶ"] = "んで";
-eChanges["む"] = "んで";
-eChanges["る"] = "って";
+teChanges["う"] = "って";
+teChanges["く"] = "いて";
+teChanges["ぐ"] = "いで";
+teChanges["す"] = "して";
+teChanges["つ"] = "って";
+teChanges["ぶ"] = "んで";
+teChanges["む"] = "んで";
+teChanges["る"] = "って";
 
 var taChanges = {};
-eChanges["う"] = "った";
-eChanges["く"] = "いた";
-eChanges["ぐ"] = "いだ";
-eChanges["す"] = "した";
-eChanges["つ"] = "った";
-eChanges["ぶ"] = "んだ";
-eChanges["む"] = "んだ";
-eChanges["る"] = "った";
+taChanges["う"] = "った";
+taChanges["く"] = "いた";
+taChanges["ぐ"] = "いだ";
+taChanges["す"] = "した";
+taChanges["つ"] = "った";
+taChanges["ぶ"] = "んだ";
+taChanges["む"] = "んだ";
+taChanges["る"] = "った";
 
 class Godan extends Verb{
 	constructor(type, kanji, kana, meaning){
@@ -180,39 +180,39 @@ class Godan extends Verb{
 		var lastChar = this.kanji.slice(-1);
 		var ending = eChanges[lastChar] + "る";
 
-		var newKanji = this.kanji.substring(0, kanji.length - 1);
-		var newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, this.kanji.length - 1);
+		var newKana  = this.kana.substring(0,  this.kana.length - 1);
 
 		newKanji += ending;
 		newKana  += ending;
 
-		return new Ichidan(i, newKanji, newKana, this.meaning);
+		return new Ichidan('i', newKanji, newKana, this.meaning);
 	}
 
 	toPassive() {
 		var lastChar = this.kanji.slice(-1);
 		var ending = aChanges[lastChar] + "れる";
 
-		var newKanji = this.kanji.substring(0, kanji.length - 1);
-		var newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, this.kanji.length - 1);
+		var newKana  = this.kana.substring(0,  this.kana.length -  1);
 
 		newKanji += ending;
 		newKana  += ending;
 
-		return new Ichidan(i, newKanji, newKana, this.meaning);
+		return new Ichidan('i', newKanji, newKana, this.meaning);
 	}
 
 	toCausative() {
 		var lastChar = this.kanji.slice(-1);
 		var ending = aChanges[lastChar] + "せる";
 
-		var newKanji = this.kanji.substring(0, kanji.length - 1);
-		var newKana  = this.kana.substring(0,  kana.length -  1);
+		var newKanji = this.kanji.substring(0, this.kanji.length - 1);
+		var newKana  = this.kana.substring(0,  this.kana.length -  1);
 
 		newKanji += ending;
 		newKana  += ending;
 
-		return new Ichidan(i, newKanji, newKana, this.meaning);
+		return new Ichidan('i', newKanji, newKana, this.meaning);
 	}
 
 	getShort(tense, polarity){
@@ -223,13 +223,13 @@ class Godan extends Verb{
 			return this.kanji;
 		}
 
-		else if(tense && polarity){
+		else if(tense && !polarity){
 			return base + aChanges[lastChar] + "ない";
 		}
 
 		else if(!tense && polarity){
 			// Exception for　verbs ending in いく
-			if(this.kanji.string(-2) === "いく"){
+			if(this.kana.slice(-2) === "いく"){
 				return base + "った";
 			}
 
@@ -254,7 +254,7 @@ class Godan extends Verb{
 		
 		if(polarity){
 			// Account for verbs ending in いく
-			if(this.kanji.string(-2) === "いく"){
+			if(this.kana.slice(-2) === "いく"){
 				return base + "って";
 			}
 
@@ -273,7 +273,7 @@ class Godan extends Verb{
 		var base = this.kanji.substring(0, this.kanji.length - 1);
 
 		if(polarity){
-			return base + eChanges[lastchar] + "ば";
+			return base + eChanges[lastChar] + "ば";
 		} 
 
 		return base + aChanges[lastChar] + "なければ";
