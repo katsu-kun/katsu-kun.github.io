@@ -48,4 +48,4 @@ function runTests(){
     }
 }
 
-//runTests();
+runTests();

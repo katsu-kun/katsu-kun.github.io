@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+    apiKey: "<API_KEY>",
+    authDomain: "<PROJECT_ID>.firebaseapp.com",
+    databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+    projectId: "<PROJECT_ID>",
+    storageBucket: "<BUCKET>.appspot.com",
+    messagingSenderId: "<SENDER_ID>",
+  };
+  firebase.initializeApp(config);
+</script>
+
 
   <head>
-    <title>活くん (Commit 9 Test)</title>
-    <script src='./javascript/jquery-3.3.1.js'></script>
+    <title>活くん (Commit 10 Test)</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+
   </head>
 
   <body>
     <h1 id="test-text">活くん：活用のためのゲーム</h1>
-    <form><input type="text" id='response'></form>
-    <p id='test-form-val'>N/A</p>
+    <form action="some/file" method="POST" name="myForm" id="myForm">
+		Name:
+		<input type="text" name="test_form">
+		<input type="submit">
+	</form>
 
-    <div id='conjugation-tests' visibility: hidden>
+    <p id='test-form-val'>N/A</p>
+    <div id='conjugation-tests'>
       <h2 id="ichi">一段</h2>
       <h2 id="u">五段：う</h2>
       <h2 id="iku">五段：行く</h2>
